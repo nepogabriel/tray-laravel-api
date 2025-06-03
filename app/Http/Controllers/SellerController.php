@@ -13,7 +13,13 @@ class SellerController extends Controller
     ) {}
     public function index()
     {
-        return ['tudo bem'];
+        $sellers = $this->sellerService->findAll();
+
+        return response()->json([
+            'success' => $sellers['success'],
+            'data' => $sellers['data'],
+            'message' => $sellers['message'],
+        ], $sellers['code']);
     }
 
     public function create(SellerRequest $request)

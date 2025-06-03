@@ -41,5 +41,28 @@ class SellerService
                 'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
             ];
         }
-    } 
+    }
+
+    public function findAll()
+    {
+        try {
+            $sellers = $this->sellerRepository->findAll();
+
+            return [
+                'success' => true,
+                'data' => $sellers,
+                'message' => 'Vendedores listados com sucesso.',
+                'code' => Response::HTTP_OK,
+            ];
+        } catch (\Exception $exception) {
+            Log::error('Erro ao listar vendedores: ' . $exception->getMessage());
+            
+            return [
+                'success' => false,
+                'data' => [],
+                'message' => 'Erro ao listar vendedores.',
+                'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+            ];
+        }
+    }
 }
