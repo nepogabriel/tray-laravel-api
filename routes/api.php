@@ -15,6 +15,7 @@ Route::controller(SellerController::class)->group(function () {
 });
 
 Route::controller(SaleController::class)->group(function () {
-    Route::get('/sale', 'index')->name('seller.index');
-    Route::post('/sale', 'register')->name('seller.register');
+    Route::get('/sale', 'index')->name('sale.index');
+    Route::post('/sale', 'register')->name('sale.register');
+    Route::get('/sale/{id}', 'find')->name('sale.find');
 });

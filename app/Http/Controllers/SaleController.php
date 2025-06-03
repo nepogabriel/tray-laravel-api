@@ -33,4 +33,15 @@ class SaleController extends Controller
             'message' => $sale['message'],
         ], $sale['code']);
     }
+
+    public function find(int $sale_id): JsonResponse
+    {
+        $sale = $this->saleService->findById($sale_id);
+
+        return response()->json([
+            'success' => $sale['success'],
+            'data' => $sale['data'],
+            'message' => $sale['message'],
+        ], $sale['code']);
+    }
 }

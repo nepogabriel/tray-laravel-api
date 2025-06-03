@@ -75,4 +75,27 @@ class SaleService
             ];
         }
     }
+
+    public function findById(int $sale_id): array
+    {
+        try {
+            $sale = $this->saleRepository->findById($sale_id);
+
+            return [
+                'success' => true,
+                'data' => $sale,
+                'message' => 'Venda encontrada com sucesso.',
+                'code' => Response::HTTP_OK,
+            ];
+        } catch (\Exception $exception) {
+            Log::error('Erro ao pesquisar venda por ID: ' . $exception->getMessage());
+            
+            return [
+                'success' => false,
+                'data' => [],
+                'message' => 'Erro ao pesquisar venda por ID.',
+                'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+            ];
+        }
+    }
 }

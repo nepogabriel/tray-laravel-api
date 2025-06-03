@@ -16,4 +16,9 @@ class SaleRepository
     {
         return Sale::all();
     }
+
+    public function findById(int $sale_id): Sale
+    {
+        return Sale::findOrFail($sale_id);
+    }
 }
