@@ -12,6 +12,8 @@ class Sale extends Model
     protected $fillable = [
         'seller_id',
         'value',
+        'commission',
+        'sale_date',
     ];
 
     public function seller()
