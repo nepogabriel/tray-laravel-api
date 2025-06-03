@@ -30,9 +30,7 @@ class SellerService
                 'code' => Response::HTTP_CREATED,
             ];
         } catch (\Exception $exception) {
-            Log::error('Erro ao criar vendedor: ' . $exception->getMessage(), [
-                'request_data' => $seller
-            ]);
+            Log::error('Erro ao criar vendedor: ' . $exception->getMessage());
             
             return [
                 'success' => false,
@@ -43,7 +41,7 @@ class SellerService
         }
     }
 
-    public function findAll()
+    public function findAll(): array
     {
         try {
             $sellers = $this->sellerRepository->findAll();

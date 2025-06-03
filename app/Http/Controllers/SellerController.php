@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SellerRequest;
 use App\Services\SellerService;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 class SellerController extends Controller
 {
     public function __construct(
         private SellerService $sellerService
     ) {}
-    public function index()
+    public function index(): JsonResponse
     {
         $sellers = $this->sellerService->findAll();
 
@@ -22,7 +22,7 @@ class SellerController extends Controller
         ], $sellers['code']);
     }
 
-    public function create(SellerRequest $request)
+    public function create(SellerRequest $request): JsonResponse
     {
         $seller = $this->sellerService->create($request->validated());
 
