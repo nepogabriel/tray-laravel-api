@@ -14,7 +14,7 @@ class SaleService
         private SaleRepository $saleRepository
     ) {}
 
-    public function register(array $sale)
+    public function register(array $sale): array
     {
         try {
             $value = isset($sale['value']) ? $sale['value'] : 0.0;
@@ -51,5 +51,28 @@ class SaleService
     private function addComission(float $value): float
     {
         return $value * (self::COMMISSION / 100);
+    }
+
+    public function findAll(): array
+    {
+         try {
+            $sales = $this->saleRepository->findAll();
+
+            return [
+                'success' => true,
+                'data' => $sales,
+                'message' => 'Vendas listadas com sucesso.',
+                'code' => Response::HTTP_OK,
+            ];
+        } catch (\Exception $exception) {
+            Log::error('Erro ao listar as vendas: ' . $exception->getMessage());
+            
+            return [
+                'success' => false,
+                'data' => [],
+                'message' => 'Erro ao listar as vendas.',
+                'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+            ];
+        }
     }
 }
