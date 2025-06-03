@@ -10,5 +10,5 @@ Route::get('/user', function (Request $request) {
 
 Route::controller(SellerController::class)->group(function () {
     Route::get('/seller', 'index')->name('seller.index');
-    Route::get('/seller', 'create')->name('seller.create');
+    Route::post('/seller', 'create')->name('seller.create');
 });

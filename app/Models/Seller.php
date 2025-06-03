@@ -10,8 +10,8 @@ class Seller extends Model
     use HasFactory;
 
     protected $fillable = [
-        'seller_id',
-        'value',
+        'name',
+        'email',
     ];
 
     public function sales()
