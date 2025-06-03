@@ -26,8 +26,8 @@ class SellerRequest extends FormRequest
             'name' => [
                 'required',
                 'string',
-                'min:2',
-                'max:255',
+                'min:3',
+                'max:80',
                 'regex:/^[a-zA-ZÀ-ÿ\s]+$/'
             ],
             'email' => [
@@ -44,8 +44,8 @@ class SellerRequest extends FormRequest
         return [
             'name.required' => 'O nome é obrigatório.',
             'name.string' => 'O nome deve ser um texto válido.',
-            'name.min' => 'O nome deve ter pelo menos 2 caracteres.',
-            'name.max' => 'O nome não pode ter mais de 255 caracteres.',
+            'name.min' => 'O nome deve ter pelo menos 3 caracteres.',
+            'name.max' => 'O nome não pode ter mais de 80 caracteres.',
             'name.regex' => 'O nome deve conter apenas letras e espaços.',
             
             'email.required' => 'O e-mail é obrigatório.',

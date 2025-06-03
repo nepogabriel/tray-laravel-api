@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SaleService
 {
-    private const COMMISSION = 8.5;
+    public const COMMISSION = 8.5;
 
     public function __construct(
         private SaleRepository $saleRepository
