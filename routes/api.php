@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SellerController;
 use Illuminate\Http\Request;
@@ -19,3 +20,5 @@ Route::controller(SaleController::class)->group(function () {
     Route::post('/sale', 'register')->name('sale.register');
     Route::get('/sale/{id}', 'find')->name('sale.find');
 });
+
+Route::post('/login', [AuthController::class, 'login']);
