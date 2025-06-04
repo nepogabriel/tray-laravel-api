@@ -11,4 +11,9 @@ class UserRepository
     {
         return User::all();
     }
+
+    public function register($user): User
+    {
+        return User::create($user);
+    }
 }

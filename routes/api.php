@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SellerController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,3 +26,5 @@ Route::controller(SaleController::class)->group(function () {
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::get('/email/{id}', [MailController::class, 'sendEmail']);
+
+Route::post('/register', [UserController::class, 'register']);
