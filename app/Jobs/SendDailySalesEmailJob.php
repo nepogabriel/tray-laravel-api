@@ -23,6 +23,7 @@ class SendDailySalesEmailJob implements ShouldQueue
     {
         $mailService = new MailService();
         $mailService->processDailyEmails();
+        $mailService->processDailyEmailsToAdmin();
 
         return 1;
     }

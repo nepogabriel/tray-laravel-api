@@ -28,4 +28,9 @@ class SaleRepository
             ->whereDate('sale_date', now()->format('Y-m-d'))
             ->get();
     }
+
+    public function getSalesToday(): Collection
+    {
+        return Sale::whereDate('sale_date', now()->format('Y-m-d'))->get();
+    }
 }

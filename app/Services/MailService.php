@@ -3,7 +3,9 @@
 namespace App\Services;
 
 use App\Mail\DailySalesEmail;
+use App\Mail\DailySalesToAdminEmail;
 use App\Models\Seller;
+use App\Models\User;
 use App\Repositories\SaleRepository;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -70,7 +72,37 @@ class MailService
 
             return 1;
         } catch (\Exception $exception) {
-            Log::error('Erro ao processar fila de e-mail: ' . $exception->getMessage());
+            Log::error('Erro ao processar fila de e-mail para um vendedor: ' . $exception->getMessage());
+            return 0;
+        }
+    }
+
+    public function processDailyEmailsToAdmin(): int
+    {
+        try {
+            $userList = User::all();
+
+            foreach ($userList as $index => $user) {
+                $sales = $this->saleRepository->getSalesToday();
+
+                $data = [
+                    'total_sales' => $sales->count(),
+                    'total_value' => $sales->sum('value'),
+                    'total_commission' => $sales->sum('commission'),
+                    'date' => now()->format('Y-m-d'),
+                ];
+
+                $email = new DailySalesToAdminEmail($user, $data);
+
+                $when = now()->addSeconds( $index * 5);
+                Mail::to($user)->later($when, $email);
+            }
+
+            Log::info('Fila processada com sucesso!');
+
+            return 1;
+        } catch (\Exception $exception) {
+            Log::error('Erro ao processar fila de e-mail para o administrador: ' . $exception->getMessage());
             return 0;
         }
     }
