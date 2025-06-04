@@ -16,4 +16,9 @@ class SellerRepository
     {
         return Seller::all();
     }
+
+    public function findById(int $seller_id): Seller
+    {
+        return Seller::findOrFail($seller_id);
+    }
 }

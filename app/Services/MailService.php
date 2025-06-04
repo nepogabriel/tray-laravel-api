@@ -4,25 +4,29 @@ namespace App\Services;
 
 use App\Mail\DailySalesEmail;
 use App\Mail\DailySalesToAdminEmail;
-use App\Models\Seller;
-use App\Models\User;
 use App\Repositories\SaleRepository;
+use App\Repositories\SellerRepository;
+use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class MailService
 {
     private SaleRepository $saleRepository;
+    private SellerRepository $sellerRepository;
+    private UserRepository $userRepository;
 
     public function __construct()
     {
         $this->saleRepository = new SaleRepository();
+        $this->sellerRepository = new SellerRepository();
+        $this->userRepository = new UserRepository();
     }
 
     public function processDailyEmails(): int
     {
         try {
-            $sellerList = Seller::all();
+            $sellerList = $this->sellerRepository->findAll();
 
             foreach ($sellerList as $index => $seller) {
                 $sales = $this->saleRepository->getSales($seller->id);
@@ -52,7 +56,7 @@ class MailService
     public function processDailyEmailsBySellerId(int $seller_id): int
     {
         try {
-            $seller = Seller::findOrFail($seller_id);
+            $seller = $this->sellerRepository->findById($seller_id);
 
             $sales = $this->saleRepository->getSales($seller->id);
 
@@ -80,7 +84,7 @@ class MailService
     public function processDailyEmailsToAdmin(): int
     {
         try {
-            $userList = User::all();
+            $userList = $this->userRepository->findAll();
 
             foreach ($userList as $index => $user) {
                 $sales = $this->saleRepository->getSalesToday();
