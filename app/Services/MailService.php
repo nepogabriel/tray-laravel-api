@@ -22,9 +22,6 @@ class MailService
             foreach ($sellerList as $index => $seller) {
                 $sales = $this->saleRepository->getSales($seller->id);
 
-                if ($sales->count() <= 0)
-                    continue;
-
                 $data = [
                     'total_sales' => $sales->count(),
                     'total_value' => $sales->sum('value'),

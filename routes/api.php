@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SellerController;
 use Illuminate\Http\Request;
@@ -22,3 +23,5 @@ Route::controller(SaleController::class)->group(function () {
 });
 
 Route::post('/login', [AuthController::class, 'login']);
+
+Route::get('/email', [MailController::class, 'sendEmail']);
