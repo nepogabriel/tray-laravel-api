@@ -34,9 +34,9 @@ class SaleController extends Controller
         ], $sale['code']);
     }
 
-    public function find(int $sale_id): JsonResponse
+    public function find(int $seller_id): JsonResponse
     {
-        $sale = $this->saleService->findById($sale_id);
+        $sale = $this->saleService->findById($seller_id);
 
         return response()->json([
             'success' => $sale['success'],

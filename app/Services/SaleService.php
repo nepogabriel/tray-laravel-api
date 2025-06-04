@@ -81,16 +81,16 @@ class SaleService
     public function findById(int $sale_id): array
     {
         try {
-            $sale = $this->saleRepository->findById($sale_id);
+            $sale = $this->saleRepository->findBySellerId($sale_id);
 
             return [
                 'success' => true,
                 'data' => $sale,
-                'message' => 'Venda encontrada com sucesso.',
+                'message' => 'Vendas encontrada com sucesso.',
                 'code' => Response::HTTP_OK,
             ];
         } catch (\Exception $exception) {
-            Log::error('Erro ao pesquisar venda por ID: ' . $exception->getMessage());
+            Log::error('Erro ao pesquisar vendas por ID do vendedor: ' . $exception->getMessage());
 
             return [
                 'success' => false,

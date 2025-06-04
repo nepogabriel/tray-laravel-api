@@ -17,9 +17,9 @@ class SaleRepository
         return Sale::all();
     }
 
-    public function findById(int $sale_id): Sale
+    public function findBySellerId($seller_id): Collection
     {
-        return Sale::findOrFail($sale_id);
+        return Sale::where('seller_id', $seller_id)->get();
     }
 
     public function getSales($seller_id): Collection
