@@ -85,6 +85,11 @@ php artisan db:seed
 http://localhost:8181/api/
 ```
 
+## Processar fila e-mails
+- Dentro do container execute:
+``` bash
+php artisan sales:process-daily-emails
+```
 ### Banco de dados
 - Porta externa: 33071
 - Porta interna: 3306
