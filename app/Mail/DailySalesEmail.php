@@ -16,7 +16,7 @@ class DailySalesEmail extends Mailable
     use Queueable, SerializesModels;
 
     public function __construct(
-        public $seller,
+        public Seller $seller,
         public array $salesData
     ) {}
 

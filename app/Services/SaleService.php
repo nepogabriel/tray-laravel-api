@@ -2,10 +2,8 @@
 
 namespace App\Services;
 
-use App\Jobs\SendDailySalesEmailJob;
 use App\Repositories\SaleRepository;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Redis;
 use Symfony\Component\HttpFoundation\Response;
 
 class SaleService
