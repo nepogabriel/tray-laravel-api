@@ -24,4 +24,4 @@ Route::controller(SaleController::class)->group(function () {
 
 Route::post('/login', [AuthController::class, 'login']);
 
-Route::get('/email', [MailController::class, 'sendEmail']);
+Route::get('/email/{id}', [MailController::class, 'sendEmail']);

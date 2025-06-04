@@ -8,10 +8,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 class MailController extends Controller
 {
-    public function sendEmail()
+    public function sendEmail(int $seller_id)
     {
-        $mailService = new MailService(new SaleRepository());
-        $status = $mailService->processDailyEmails();
+        $mailService = new MailService();
+        $status = $mailService->processDailyEmailsBySellerId($seller_id);
 
         if (!$status) {
             return response()->json([

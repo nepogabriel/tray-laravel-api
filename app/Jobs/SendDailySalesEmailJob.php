@@ -21,7 +21,7 @@ class SendDailySalesEmailJob implements ShouldQueue
 
     public function handle(): bool
     {
-        $mailService = new MailService(new SaleRepository());
+        $mailService = new MailService();
         $mailService->processDailyEmails();
 
         return 1;
