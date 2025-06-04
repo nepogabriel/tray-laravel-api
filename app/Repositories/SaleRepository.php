@@ -21,4 +21,11 @@ class SaleRepository
     {
         return Sale::findOrFail($sale_id);
     }
+
+    public function getSales($seller_id): Collection
+    {
+        return Sale::where('seller_id', $seller_id)
+            ->whereDate('sale_date', now()->format('Y-m-d'))
+            ->get();
+    }
 }

@@ -32,8 +32,6 @@ class SaleService
                 'sale_date' => $sale->sale_date
             ]);
 
-            $this->queueDailyEmail($sale->seller_id);
-
             return [
                 'success' => true,
                 'data' => $sale,
@@ -42,7 +40,7 @@ class SaleService
             ];
         } catch (\Exception $exception) {
             Log::error('Erro ao registrar venda: ' . $exception->getMessage());
-            
+
             return [
                 'success' => false,
                 'data' => [],
@@ -70,7 +68,7 @@ class SaleService
             ];
         } catch (\Exception $exception) {
             Log::error('Erro ao listar as vendas: ' . $exception->getMessage());
-            
+
             return [
                 'success' => false,
                 'data' => [],
@@ -93,53 +91,13 @@ class SaleService
             ];
         } catch (\Exception $exception) {
             Log::error('Erro ao pesquisar venda por ID: ' . $exception->getMessage());
-            
+
             return [
                 'success' => false,
                 'data' => [],
                 'message' => 'Erro ao pesquisar venda por ID.',
                 'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
             ];
-        }
-    }
-
-    public function queueDailyEmail($sellerId): void
-    {
-        $today = now()->format('Y-m-d');
-        $queueKey = "daily_email_queue:$today";
-
-        try{
-            Redis::sadd($queueKey, $sellerId);
-            Redis::expireat($queueKey, strtotime('tomorrow'));
-        } catch (\Exception $exception) {
-            Log::error('Erro ao registrar e-mail na fila: ' . $exception->getMessage());
-        }
-    }
-
-    public function processDailyEmails(): int
-    {
-        $today = now()->format('Y-m-d');
-        $queueKey = "daily_email_queue:$today";
-
-        try{
-            $sellerIds = Redis::smembers($queueKey) ?: [];
-
-            if (empty($sellerIds)) {
-                Log::info("Nenhum sellerId encontrado na fila $queueKey");
-                return 0;
-            }
-
-            foreach ($sellerIds as $sellerId) {
-                SendDailySalesEmailJob::dispatch($sellerId)
-                    ->delay(now()->addMinutes(rand(1, 30)));
-            }
-
-            //Redis::del($queueKey);
-        
-            return count($sellerIds);
-        } catch (\Exception $exception) {
-            Log::error('Erro ao processar fila de e-mail: ' . $exception->getMessage());
-            return 0;
         }
     }
 }

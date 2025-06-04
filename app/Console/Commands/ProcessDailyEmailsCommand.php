@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\SendDailySalesEmailJob;
 use App\Services\SaleService;
 use Illuminate\Console\Command;
 
@@ -14,9 +15,9 @@ class ProcessDailyEmailsCommand extends Command
     public function handle(SaleService $saleService)
     {
         $this->info('Processando emails diários...');
-        
-        $count = $saleService->processDailyEmails();
-        
-        $this->info("$count emails adicionados à fila de processamento.");
+
+        SendDailySalesEmailJob::dispatch();
+
+        $this->info("Emails adicionados à fila de processamento.");
     }
 }
