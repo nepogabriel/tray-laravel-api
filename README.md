@@ -14,6 +14,7 @@ API REST utilizando Laravel que gerencia uma API de controle de vendas.
 - Comando personalizado (Para executar filas)
 - Agedamento de fila
 - Mysql
+- JWT
 
 ## Rodando projeto
 ### Pré-requisitos
@@ -56,9 +57,12 @@ docker run --rm \
 docker exec -it tray-laravel-api bash
 ```
 
-- 7- Dentro do container execute para gerar uma chave do laravel
+- 7- Dentro do container execute para gerar uma chave do laravel e do JWT
 ```bash
 php artisan key:generate
+
+
+php artisan jwt:secret
 ```
 
 - 8- Dentro do container execute para criar as tabelas do banco de dados
