@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ApiResponse;
 use App\Http\Requests\UserRequest;
 use App\Services\UserService;
 
@@ -15,10 +16,6 @@ class UserController extends Controller
     {
         $user = $this->userService->register($request->validated());
 
-        return response()->json([
-            'success' => $user['success'],
-            'data' => $user['data'],
-            'message' => $user['message'],
-        ], $user['code']);
+        return ApiResponse::response($user);
     }
 }
