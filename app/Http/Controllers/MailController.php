@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\SaleRepository;
+use App\Helpers\ApiResponse;
 use App\Services\MailService;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -14,17 +14,23 @@ class MailController extends Controller
         $status = $mailService->processDailyEmailsBySellerId($seller_id);
 
         if (!$status) {
-            return response()->json([
+            $data = [
                 'success' => false,
                 'data' => [],
                 'message' => 'Algo deu errado ao enviado o e-mail.',
-            ], Response::HTTP_BAD_REQUEST);
+                'code' => Response::HTTP_BAD_REQUEST,
+            ];
+
+            return ApiResponse::response($data);
         }
 
-        return response()->json([
-                'success' => true,
-                'data' => [],
-                'message' => 'E-mail enviado com sucesso.',
-            ], Response::HTTP_OK);
+        $data = [
+            'success' => true,
+            'data' => [],
+            'message' => 'E-mail enviado com sucesso.',
+            'code' => Response::HTTP_OK
+        ];
+
+        return ApiResponse::response($data);
     }
 }
