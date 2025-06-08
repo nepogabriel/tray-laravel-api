@@ -10,7 +10,7 @@ class ApiResponse
     public static function response(array $data): JsonResponse
     {
         if (!$data['success'])
-            return self::error($data['message'], $data['data'], $data['code']);
+            return self::error($data['data'], $data['message'], $data['code']);
 
         return self::success($data['data'], $data['message'], $data['code']);
     }

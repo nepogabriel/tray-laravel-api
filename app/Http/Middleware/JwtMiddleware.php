@@ -2,8 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use App\Helpers\ApiResponse;
 use Closure;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -15,17 +17,38 @@ class JwtMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next): JsonResponse
     {
         try {
             $user = JWTAuth::parseToken()->authenticate();
         } catch (Exception $e) {
             if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException) {
-                return response()->json(['status' => 'Token de autorização inválido!'], Response::HTTP_UNAUTHORIZED);
+                $data = [
+                    'success' => false,
+                    'data' => [],
+                    'message' => 'Token de autorização inválido!',
+                    'code' => Response::HTTP_UNAUTHORIZED,
+                ];
+
+                return ApiResponse::response($data);
             } elseif ($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException) {
-                return response()->json(['status' => 'Token de autorização expirado!'], Response::HTTP_UNAUTHORIZED);
+                $data = [
+                    'success' => false,
+                    'data' => [],
+                    'message' => 'Token de autorização expirado!',
+                    'code' => Response::HTTP_UNAUTHORIZED,
+                ];
+
+                return ApiResponse::response($data);
             } else {
-                return response()->json(['status' => 'Token de autorização não encontrado!'], Response::HTTP_UNAUTHORIZED);
+                $data = [
+                    'success' => false,
+                    'data' => [],
+                    'message' => 'Token de autorização não encontrado!',
+                    'code' => Response::HTTP_UNAUTHORIZED,
+                ];
+
+                return ApiResponse::response($data);
             }
         }
 
