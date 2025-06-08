@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ApiResponse;
 use App\Http\Requests\SaleRequest;
 use App\Services\SaleService;
 use Illuminate\Http\JsonResponse;
@@ -16,32 +17,20 @@ class SaleController extends Controller
     {
         $sales = $this->saleService->findAll();
 
-        return response()->json([
-            'success' => $sales['success'],
-            'data' => $sales['data'],
-            'message' => $sales['message'],
-        ], $sales['code']);
+        return ApiResponse::response($sales);
     }
 
     public function register(SaleRequest $request): JsonResponse
     {
         $sale = $this->saleService->register($request->validated());
 
-        return response()->json([
-            'success' => $sale['success'],
-            'data' => $sale['data'],
-            'message' => $sale['message'],
-        ], $sale['code']);
+        return ApiResponse::response($sale);
     }
 
     public function find(int $seller_id): JsonResponse
     {
         $sale = $this->saleService->findById($seller_id);
 
-        return response()->json([
-            'success' => $sale['success'],
-            'data' => $sale['data'],
-            'message' => $sale['message'],
-        ], $sale['code']);
+        return ApiResponse::response($sale);
     }
 }
